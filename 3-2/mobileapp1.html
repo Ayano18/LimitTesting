@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Testing</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #001e4d;
+}
+.app{
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz{
+    padding: 20px 0;
+}
+.quiz h2{
+    font-size: 18px;
+    color: #001e4d;
+    font-weight: 600;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.correct{
+    background: #9aeabc;
+}
+.incorrect{
+    background: #ff9393;
+}
+    </style>
+</head>
+
+<body>
+    
+    <div class="app">
+            <h1>Handout 1 for Mobile Sys & Tech</h1>
+            <div class="quiz">
+                <h2 id="question">Question Goes Here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                    <button class="btn">Answer 5</button>
+                    <button class="btn">Answer 6</button>
+                    <button class="btn">Answer 7</button>
+                    <button class="btn">Answer 8</button>
+                    <button class="btn">Answer 9</button>
+                    <button class="btn">Answer 10</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+</body>
+<script>
+
+    const questions = [
+    // --- Benefits of Using Mobile Apps ---
+    {
+        question: "What benefit allows a mobile app user to access and share information anytime or anywhere?",
+        answers: [
+            { text: "Personalization", correct: false},
+            { text: "Productivity", correct: false},
+            { text: "Convenience", correct: true},
+            { text: "Compatibility", correct: false},
+        ]
+    },
+    {
+        question: "Which benefit allows a user to change the settings of the mobile app based on their preference?",
+        answers: [
+            { text: "Convenience", correct: false},
+            { text: "Personalization", correct: true},
+            { text: "Automation", correct: false},
+            { text: "Optimization", correct: false},
+        ]
+    },
+    {
+        question: "Which benefit enables users to write, read, and present reports using only their mobile phones?",
+        answers: [
+            { text: "Productivity", correct: true},
+            { text: "Convenience", correct: false},
+            { text: "Security", correct: false},
+            { text: "Debugging", correct: false},
+        ]
+    },
+    // --- Development Environments ---
+    {
+        question: "What is a programming environment that has been packaged as an application program?",
+        answers: [
+            { text: "Emulator", correct: false},
+            { text: "Framework", correct: false},
+            { text: "IDE", correct: true},
+            { text: "Compiler", correct: false},
+        ]
+    },
+    {
+        question: "It typically consists of a code editor, compiler, debugger, and GUI builder",
+        answers: [
+            { text: "IDE", correct: true},
+            { text: "Web browser", correct: false},
+            { text: "Database", correct: false},
+            { text: "Operating System", correct: false},
+        ]
+    },
+    {
+        question: "What is the official IDE for Android application development?",
+        answers: [
+            { text: "Xcode", correct: false},
+            { text: "Android Studio", correct: true},
+            { text: "Xamarin", correct: false},
+            { text: "Corona", correct: false},
+        ]
+    },
+    {
+        question: "Which tool allows users to build apps and run them directly on their Apple devices?",
+        answers: [
+            { text: "Android Studio", correct: false},
+            { text: "Apache Cordova", correct: false},
+            { text: "Xcode", correct: true},
+            { text: "Xamarin", correct: false},
+        ]
+    },
+    {
+        question: "What is the programming language created by Apple for iOS and OS X development?",
+        answers: [
+            { text: "Java", correct: false},
+            { text: "Kotlin", correct: false},
+            { text: "Swift", correct: true},
+            { text: "C#", correct: false},
+        ]
+    },
+    {
+        question: "Which platform extends the .NET developer platform with tools and libraries?",
+        answers: [
+            { text: "Xamarin", correct: true},
+            { text: "Corona", correct: false},
+            { text: "Apache Cordova", correct: false},
+            { text: "Xcode", correct: false},
+        ]
+    },
+    {
+        question: "What is a cross-platform framework ideal for creating mobile apps and games?",
+        answers: [
+            { text: "Xcode", correct: false},
+            { text: "Android Studio", correct: false},
+            { text: "Xamarin", correct: false},
+            { text: "Corona", correct: true},
+        ]
+    },
+    {
+        question: "Which open-source mobile development framework allows the use of standard web technologies?",
+        answers: [
+            { text: "Apache Cordova", correct: true},
+            { text: "Xamarin", correct: false},
+            { text: "Xcode", correct: false},
+            { text: "Corona", correct: false},
+        ]
+    },
+    // --- Challenges in Developing Mobile Apps ---
+    {
+        question: "Which challenge requires studying the market scenario and addressing the needs of the target users?",
+        answers: [
+            { text: "Securing users", correct: false},
+            { text: "Understanding the market and the user", correct: true},
+            { text: "Supporting multiple screen types", correct: false},
+            { text: "Maximizing app performance", correct: false},
+        ]
+    },
+    {
+        question: "Why is supporting multiple screen types a challenge in mobile app development?",
+        answers: [
+            { text: "Because devices come in different sizes and shapes", correct: true},
+            { text: "Because users prefer smaller screens", correct: false},
+            { text: "Because battery life differs per screen", correct: false},
+            { text: "Because internet access speeds vary", correct: false},
+        ]
+    },
+    {
+        question: "The performance of an app is affected by factors such as battery life, internet access, and etc.",
+        answers: [
+            { text: "User interface design", correct: false},
+            { text: "Maximizing app performance", correct: true},
+            { text: "App marketing performance", correct: false},
+            { text: "Code documentation", correct: false},
+        ]
+    },
+    {
+        question: "Why is securing users a significant challenge?",
+        answers: [
+            { text: "Because users forget their passwords", correct: false},
+            { text: "Because user data is the most valuable asset", correct: true},
+            { text: "Because of multiple screen types", correct: false},
+            { text: "Because of app performance issues", correct: false},
+        ]
+    },
+    {
+        question: "What is the challenge regarding the inability of all users to upgrade their devices?",
+        answers: [
+            { text: "Maximizing app performance", correct: false},
+            { text: "Securing users", correct: false},
+            { text: "Remaining compatible with older versions", correct: true},
+            { text: "Understanding the market", correct: false},
+        ]
+    },
+    // --- App Development Workflow ---
+    {
+        question: "In which phase do you install and set up your chosen IDE, create an emulator, and connect hardware devices?",
+        answers: [
+            { text: "Setup", correct: true},
+            { text: "Development", correct: false},
+            { text: "Building and Running", correct: false},
+            { text: "Publishing", correct: false},
+        ]
+    },
+    {
+        question: "Which phase involves writing code, designing the UI, and creating resources?",
+        answers: [
+            { text: "Setup", correct: false},
+            { text: "Development", correct: true},
+            { text: "Publishing", correct: false},
+            { text: "Debugging", correct: false},
+        ]
+    },
+    {
+        question: "During which phase do you build your project into a package that can be installed and execute on an emulator?",
+        answers: [
+            { text: "Development", correct: false},
+            { text: "Debugging", correct: false},
+            { text: "Setup", correct: false},
+            { text: "Building and Running", correct: true},
+        ]
+    },
+    {
+        question: "What is the iterative phase focused on eliminating bugs and optimizing the app?",
+        answers: [
+            { text: "Publishing", correct: false},
+            { text: "Development", correct: false},
+            { text: "Debugging, Profiling, and Testing", correct: true},
+            { text: "Setup", correct: false},
+        ]
+    },
+    {
+        question: "In which phase is the app configured, built for release, and distributed?",
+        answers: [
+            { text: "Setup", correct: false},
+            { text: "Development", correct: false},
+            { text: "Building and Running", correct: false},
+            { text: "Publishing", correct: true},
+        ]
+    }
+];
+    
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+
+    shuffle(questions);
+    questions.forEach(q => shuffle(q.answers));
+
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+});
+
+
+startQuiz();
+
+</script>
+</html>

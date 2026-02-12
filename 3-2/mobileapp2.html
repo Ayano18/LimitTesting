@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Testing</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #001e4d;
+}
+.app{
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz{
+    padding: 20px 0;
+}
+.quiz h2{
+    font-size: 18px;
+    color: #001e4d;
+    font-weight: 600;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.correct{
+    background: #9aeabc;
+}
+.incorrect{
+    background: #ff9393;
+}
+    </style>
+</head>
+
+<body>
+    
+    <div class="app">
+            <h1>Handout 1 for Mobile Sys & Tech</h1>
+            <div class="quiz">
+                <h2 id="question">Question Goes Here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                    <button class="btn">Answer 5</button>
+                    <button class="btn">Answer 6</button>
+                    <button class="btn">Answer 7</button>
+                    <button class="btn">Answer 8</button>
+                    <button class="btn">Answer 9</button>
+                    <button class="btn">Answer 10</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+</body>
+<script>
+
+    const questions = [
+    // --- App Fundamentals: Languages ---
+    {
+        question: "Which programming language is described as being close to C# and Java, making it easy for programmers to switch between them?",
+        answers: [
+            { text: "Swift", correct: false},
+            { text: "Kotlin", correct: false},
+            { text: "C++", correct: true},
+            { text: "Python", correct: false},
+        ]
+    },
+    {
+        question: "Which language is the official programming language for iOS development?",
+        answers: [
+            { text: "Kotlin", correct: false},
+            { text: "Swift", correct: true},
+            { text: "C++", correct: false},
+            { text: "Objective-C", correct: false},
+        ]
+    },
+    {
+        question: "Which programming language combines both object-oriented and functional programming features?",
+        answers: [
+            { text: "Swift", correct: false},
+            { text: "C++", correct: false},
+            { text: "Java", correct: false},
+            { text: "Kotlin", correct: true},
+        ]
+    },
+    // --- Core App Components ---
+    {
+        question: "Which component serves as the entry point for interacting with the user and represents a single screen with a UI?",
+        answers: [
+            { text: "Service", correct: false},
+            { text: "Broadcast Receiver", correct: false},
+            { text: "Activity", correct: true},
+            { text: "Content Provider", correct: false},
+        ]
+    },
+    {
+        question: "Which component runs in the background to perform long-running operations or work for remote processes?",
+        answers: [
+            { text: "Activity", correct: false},
+            { text: "Service", correct: true},
+            { text: "Intent", correct: false},
+            { text: "Broadcast Receiver", correct: false},
+        ]
+    },
+    {
+        question: "What is the component that enables the system to deliver events to the app outside of a regular user flow?",
+        answers: [
+            { text: "Broadcast Receiver", correct: true},
+            { text: "Content Provider", correct: false},
+            { text: "Activity", correct: false},
+            { text: "Service", correct: false},
+        ]
+    },
+    {
+        question: "Which component manages a shared set of app data that your app and other apps can access?",
+        answers: [
+            { text: "Service", correct: false},
+            { text: "Intent", correct: false},
+            { text: "Content Provider", correct: true},
+            { text: "Activity", correct: false},
+        ]
+    },
+    {
+        question: "What is the message object that describes an action to be performed?",
+        answers: [
+            { text: "Manifest", correct: false},
+            { text: "Intent", correct: true},
+            { text: "Action", correct: false},
+            { text: "Broadcast", correct: false},
+        ]
+    },
+    // --- The Manifest File ---
+    {
+        question: "Which file details all the components that exist in an Android app?",
+        answers: [
+            { text: "build.gradle", correct: false},
+            { text: "MainActivity.java", correct: false},
+            { text: "The Manifest file", correct: true},
+            { text: "activity_main.xml", correct: false},
+        ]
+    },
+    {
+        question: "What is the root element of the AndroidManifest.xml file?",
+        answers: [
+            { text: "application", correct: false},
+            { text: "manifest", correct: true},
+            { text: "intent-filter", correct: false},
+            { text: "activity", correct: false},
+        ]
+    },
+    {
+        question: "Which manifest element contains the sub-elements that declare each of the application's components?",
+        answers: [
+            { text: "manifest", correct: false},
+            { text: "activity", correct: false},
+            { text: "application", correct: true},
+            { text: "provider", correct: false},
+        ]
+    },
+    {
+        question: "In the manifest, what does the attribute `package='com.example.myapp'` represent?",
+        answers: [
+            { text: "The app's version name", correct: false},
+            { text: "The app's unique package name", correct: true},
+            { text: "The name of the main activity", correct: false},
+            { text: "The path to the source code", correct: false},
+        ]
+    },
+    // --- Manifest Sub-elements ---
+    {
+        question: "Which XML element is used in the manifest to declare a subclass of Activity?",
+        answers: [
+            { text: "action", correct: false},
+            { text: "service", correct: false},
+            { text: "activity", correct: true},
+            { text: "receiver", correct: false},
+        ]
+    },
+    {
+        question: "Which XML element is used in the manifest to declare a subclass of Service?",
+        answers: [
+            { text: "provider", correct: false},
+            { text: "service", correct: true},
+            { text: "activity", correct: false},
+            { text: "receiver", correct: false},
+        ]
+    },
+    {
+        question: "Which XML element is used in the manifest to declare a subclass of Broadcast Receiver?",
+        answers: [
+            { text: "receiver", correct: true},
+            { text: "provider", correct: false},
+            { text: "service", correct: false},
+            { text: "action", correct: false},
+        ]
+    },
+    {
+        question: "Which XML element is used in the manifest to declare a subclass of Content Provider?",
+        answers: [
+            { text: "activity", correct: false},
+            { text: "service", correct: false},
+            { text: "receiver", correct: false},
+            { text: "provider", correct: true},
+        ]
+    },
+    // --- Intent Filters ---
+    {
+        question: "Which element specifies the types of intents that an activity, service, or broadcast receiver can respond to?",
+        answers: [
+            { text: "action", correct: false},
+            { text: "intent-filter", correct: true},
+            { text: "category", correct: false},
+            { text: "application", correct: false},
+        ]
+    },
+    {
+        question: "Which elements adds an action to an intent filter?",
+        answers: [
+            { text: "action", correct: true},
+            { text: "category", correct: false},
+            { text: "intent-filter", correct: false},
+            { text: "manifest", correct: false},
+        ]
+    },
+    {
+        question: "Which element adds a category name to an intent filter?",
+        answers: [
+            { text: "action", correct: false},
+            { text: "intent-filter", correct: false},
+            { text: "category", correct: true},
+            { text: "application", correct: false},
+        ]
+    }
+];
+    
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+
+    shuffle(questions);
+    questions.forEach(q => shuffle(q.answers));
+
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+});
+
+
+startQuiz();
+
+</script>
+</html>
