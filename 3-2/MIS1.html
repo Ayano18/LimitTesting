@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Testing</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #001e4d;
+}
+.app{
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz{
+    padding: 20px 0;
+}
+.quiz h2{
+    font-size: 18px;
+    color: #001e4d;
+    font-weight: 600;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.correct{
+    background: #9aeabc;
+}
+.incorrect{
+    background: #ff9393;
+}
+    </style>
+</head>
+
+<body>
+    
+    <div class="app">
+            <h1>Handout 1 for MIS</h1>
+            <div class="quiz">
+                <h2 id="question">Question Goes Here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                    <button class="btn">Answer 5</button>
+                    <button class="btn">Answer 6</button>
+                    <button class="btn">Answer 7</button>
+                    <button class="btn">Answer 8</button>
+                    <button class="btn">Answer 9</button>
+                    <button class="btn">Answer 10</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+</body>
+<script>
+
+    const questions = [
+    // --- Data vs Information ---
+    {
+        question: "What is defined as a number, statement, image, or video that may represent data?",
+        answers: [
+            { text: "Information", correct: false},
+            { text: "System", correct: false},
+            { text: "Data", correct: true},
+            { text: "Feedback", correct: false},
+        ]
+    },
+    {
+        question: "What refers to a collection of data, such as words, numbers, images or graphics?",
+        answers: [
+            { text: "Data", correct: false},
+            { text: "Information", correct: true},
+            { text: "Processing", correct: false},
+            { text: "Output", correct: false},
+        ]
+    },
+    // --- Characteristics of Information ---
+    {
+        question: "Which characteristic ensures every information must be up to date based on the requirements?",
+        answers: [
+            { text: "Accuracy", correct: false},
+            { text: "Timeliness", correct: true},
+            { text: "Completeness", correct: false},
+            { text: "Conciseness", correct: false},
+        ]
+    },
+    {
+        question: "Which characteristic states a system must have appropriate and relevant information in every module?",
+        answers: [
+            { text: "Appropriateness", correct: true},
+            { text: "Understandability", correct: false},
+            { text: "Accuracy", correct: false},
+            { text: "Timeliness", correct: false},
+        ]
+    },
+    {
+        question: "Information that is correct or precise is said to have ________.",
+        answers: [
+            { text: "Conciseness", correct: false},
+            { text: "Completeness", correct: false},
+            { text: "Accuracy", correct: true},
+            { text: "Appropriateness", correct: false},
+        ]
+    },
+    {
+        question: "Which characteristic means that not all information must be displayed in the system?",
+        answers: [
+            { text: "Conciseness", correct: true},
+            { text: "Completeness", correct: false},
+            { text: "Accuracy", correct: false},
+            { text: "Understandability", correct: false},
+        ]
+    },
+    {
+        question: "Which characteristic ensures that any information provided should be understandable?",
+        answers: [
+            { text: "Appropriateness", correct: false},
+            { text: "Conciseness", correct: false},
+            { text: "Understandability", correct: true},
+            { text: "Timeliness", correct: false},
+        ]
+    },
+    {
+        question: "Which characteristic ensures any information must be complete based on the requirements?",
+        answers: [
+            { text: "Accuracy", correct: false},
+            { text: "Understandability", correct: false},
+            { text: "Timeliness", correct: false},
+            { text: "Completeness", correct: true},
+        ]
+    },
+    // --- System Concepts ---
+    {
+        question: "What refers to components that are interrelated, working together with a common goal to accept inputs and outputs?",
+        answers: [
+            { text: "System", correct: true},
+            { text: "Environment", correct: false},
+            { text: "Interface", correct: false},
+            { text: "Subsystem", correct: false},
+        ]
+    },
+    {
+        question: "What is the information or data a user adds in the system?",
+        answers: [
+            { text: "Processing", correct: false},
+            { text: "Input", correct: true},
+            { text: "Output", correct: false},
+            { text: "Control", correct: false},
+        ]
+    },
+    {
+        question: "In system concepts, what refers to the efficiency of data processing?",
+        answers: [
+            { text: "Input", correct: false},
+            { text: "Feedback", correct: false},
+            { text: "Processing", correct: true},
+            { text: "Output", correct: false},
+        ]
+    },
+    {
+        question: "What refers to the data or information that has been processed and displayed to the end users?",
+        answers: [
+            { text: "Input", correct: false},
+            { text: "Processing", correct: false},
+            { text: "Feedback", correct: false},
+            { text: "Output", correct: true},
+        ]
+    },
+    {
+        question: "What refers to the comments or suggestions in the system?",
+        answers: [
+            { text: "Input", correct: false},
+            { text: "Feedback", correct: true},
+            { text: "Control", correct: false},
+            { text: "Environment", correct: false},
+        ]
+    },
+    {
+        question: "What system concept is about managing the operations in every process of the system?",
+        answers: [
+            { text: "Control", correct: true},
+            { text: "Processing", correct: false},
+            { text: "Output", correct: false},
+            { text: "Environment", correct: false},
+        ]
+    },
+    // --- Boundaries, Subsystems, and Environment ---
+    {
+        question: "What is the scope of activities in which it is limited for viewing or accessing?",
+        answers: [
+            { text: "System Environment", correct: false},
+            { text: "Subsystem Interface", correct: false},
+            { text: "System Boundaries", correct: true},
+            { text: "System Feedback", correct: false},
+        ]
+    },
+    {
+        question: "Every system consists of ________ that have different objectives and interactions based on requirements.",
+        answers: [
+            { text: "Subsystems", correct: true},
+            { text: "Environment", correct: false},
+            { text: "Interfaces", correct: false},
+            { text: "Controls", correct: false},
+        ]
+    },
+    {
+        question: "What refers to the connection of each system or subsystem boundaries and serves as the connection?",
+        answers: [
+            { text: "System Feedback", correct: false},
+            { text: "System Environment", correct: false},
+            { text: "Subsystem Interface", correct: true},
+            { text: "System Boundaries", correct: false},
+        ]
+    },
+    {
+        question: "What refers to the people, organization, and other systems that give and receive data from the system?",
+        answers: [
+            { text: "System Boundaries", correct: false},
+            { text: "System Environment", correct: true},
+            { text: "Subsystem Interface", correct: false},
+            { text: "Transaction Processing", correct: false},
+        ]
+    },
+    {
+        question: "What does every system need to be able to do its job and process accurately based on the requirements?",
+        answers: [
+            { text: "System Feedback", correct: true},
+            { text: "System Boundaries", correct: false},
+            { text: "Subsystems", correct: false},
+            { text: "Organization Information System", correct: false},
+        ]
+    },
+    // --- Types of Information Systems ---
+    {
+        question: "What refers to a set of interrelated components that collect information, process, store, and display output?",
+        answers: [
+            { text: "Decision Support System", correct: false},
+            { text: "Information Systems", correct: true},
+            { text: "Supply Chain Management", correct: false},
+            { text: "Expert Support System", correct: false},
+        ]
+    },
+    {
+        question: "Which system in an organization may consist of hardware, software, people, procedures, and telecoms?",
+        answers: [
+            { text: "Organization Information System", correct: true},
+            { text: "Transaction Procession System", correct: false},
+            { text: "Business Intelligence Systems", correct: false},
+            { text: "Customer Relationship Management System", correct: false},
+        ]
+    },
+    {
+        question: "Which system is known as the most widely used information system?",
+        answers: [
+            { text: "Decision Support System", correct: false},
+            { text: "Transaction Procession System", correct: true},
+            { text: "Expert Support System", correct: false},
+            { text: "Supply Chain Management System", correct: false},
+        ]
+    },
+    {
+        question: "Which system includes a sequence of activities such as marketing, manufacturing, and assembly?",
+        answers: [
+            { text: "Customer Relationship Management System", correct: false},
+            { text: "Business Intelligence Systems", correct: false},
+            { text: "Supply Chain Management System", correct: true},
+            { text: "Transaction Procession System", correct: false},
+        ]
+    },
+    {
+        question: "Which system manages the relationship of the organization to its customer?",
+        answers: [
+            { text: "Customer Relationship Management System", correct: true},
+            { text: "Expert Support System", correct: false},
+            { text: "Supply Chain Management System", correct: false},
+            { text: "Business Intelligence Systems", correct: false},
+        ]
+    },
+    {
+        question: "What do most organizations use to compete better with other organizations?",
+        answers: [
+            { text: "Decision Support System", correct: false},
+            { text: "Expert Support System", correct: false},
+            { text: "Business Intelligence Systems", correct: true},
+            { text: "Transaction Procession System", correct: false},
+        ]
+    },
+    {
+        question: "Which system helps to find actions and answers most of the questions?",
+        answers: [
+            { text: "Expert Support System", correct: false},
+            { text: "Decision Support System", correct: true},
+            { text: "Supply Chain Management System", correct: false},
+            { text: "Business Intelligence Systems", correct: false},
+        ]
+    },
+    {
+        question: "Which system uses artificial intelligence to preserve the knowledge of an expert and solve problems?",
+        answers: [
+            { text: "Decision Support System", correct: false},
+            { text: "Transaction Procession System", correct: false},
+            { text: "Expert Support System", correct: true},
+            { text: "Business Intelligence Systems", correct: false},
+        ]
+    }
+];
+    
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+
+    shuffle(questions);
+    questions.forEach(q => shuffle(q.answers));
+
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+});
+
+
+startQuiz();
+
+</script>
+</html>
