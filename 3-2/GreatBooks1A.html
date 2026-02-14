@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Testing</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #001e4d;
+}
+.app{
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz{
+    padding: 20px 0;
+}
+.quiz h2{
+    font-size: 18px;
+    color: #001e4d;
+    font-weight: 600;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.correct{
+    background: #9aeabc;
+}
+.incorrect{
+    background: #ff9393;
+}
+    </style>
+</head>
+
+<body>
+    
+    <div class="app">
+            <h1>Handout 1A for GreatBooks</h1>
+            <div class="quiz">
+                <h2 id="question">Question Goes Here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                    <button class="btn">Answer 5</button>
+                    <button class="btn">Answer 6</button>
+                    <button class="btn">Answer 7</button>
+                    <button class="btn">Answer 8</button>
+                    <button class="btn">Answer 9</button>
+                    <button class="btn">Answer 10</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+</body>
+<script>
+
+    const questions = [
+    // --- Introduction and Forms ---
+    {
+        question: "What is the meaning of the Latin word 'littera'?",
+        answers: [
+            { text: "Knowledge", correct: false},
+            { text: "Storytelling", correct: false},
+            { text: "Letters", correct: true},
+            { text: "Books", correct: false},
+        ]
+    },
+    {
+        question: "What is written or spoken language that follows natural speech patterns called?",
+        answers: [
+            { text: "Prose", correct: true},
+            { text: "Poetry", correct: false},
+            { text: "Drama", correct: false},
+            { text: "Haiku", correct: false},
+        ]
+    },
+    {
+        question: "Which type of prose tells made-up stories created from the writer's imagination?",
+        answers: [
+            { text: "Non-fictional prose", correct: false},
+            { text: "Fictional prose", correct: true},
+            { text: "Biography", correct: false},
+            { text: "Essay", correct: false},
+        ]
+    },
+    {
+        question: "Which type of prose presents facts, real events, or opinions based on truth?",
+        answers: [
+            { text: "Fictional prose", correct: false},
+            { text: "Non-fictional prose", correct: true},
+            { text: "Novel", correct: false},
+            { text: "Fable", correct: false},
+        ]
+    },
+    // --- Fictional Prose Subgenres ---
+    {
+        question: "What is a long, structured narrative featuring complex characters and intertwined events?",
+        answers: [
+            { text: "Short Story", correct: false},
+            { text: "Novel", correct: true},
+            { text: "Myth", correct: false},
+            { text: "Fable", correct: false},
+        ]
+    },
+    {
+        question: "What is a brief, focused narrative centering on a single event, character, or theme?",
+        answers: [
+            { text: "Short Story", correct: true},
+            { text: "Novel", correct: false},
+            { text: "Legend", correct: false},
+            { text: "Epic", correct: false},
+        ]
+    },
+    {
+        question: "Which short tale features animal characters and conveys a lesson?",
+        answers: [
+            { text: "Fairy Tale", correct: false},
+            { text: "Fable", correct: true},
+            { text: "Legend", correct: false},
+            { text: "Myth", correct: false},
+        ]
+    },
+    {
+        question: "Which magical story features fantastical elements and a lesson, often passed down through generations?",
+        answers: [
+            { text: "Fable", correct: false},
+            { text: "Myth", correct: false},
+            { text: "Legend", correct: false},
+            { text: "Fairy Tale", correct: true},
+        ]
+    },
+    {
+        question: "What is a traditional tale that explains origins, nature, or culture, often involving gods or supernatural beings?",
+        answers: [
+            { text: "Legend", correct: false},
+            { text: "Myth", correct: true},
+            { text: "Fable", correct: false},
+            { text: "Novel", correct: false},
+        ]
+    },
+    {
+        question: "What is a story passed down through generations, blending historical facts with fictional elements, often centered on heroes?",
+        answers: [
+            { text: "Legend", correct: true},
+            { text: "Myth", correct: false},
+            { text: "Short Story", correct: false},
+            { text: "Biography", correct: false},
+        ]
+    },
+    // --- Non-Fictional Prose Subgenres ---
+    {
+        question: "What is a detailed account of a person’s life story written by someone else?",
+        answers: [
+            { text: "Autobiography", correct: false},
+            { text: "Memoir", correct: false},
+            { text: "Biography", correct: true},
+            { text: "Essay", correct: false},
+        ]
+    },
+    {
+        question: "What is a person’s life story written by themselves?",
+        answers: [
+            { text: "Autobiography", correct: true},
+            { text: "Biography", correct: false},
+            { text: "Speech", correct: false},
+            { text: "Essay", correct: false},
+        ]
+    },
+    {
+        question: "Which personal account focuses on specific memories, experiences, or themes?",
+        answers: [
+            { text: "Biography", correct: false},
+            { text: "Memoir", correct: true},
+            { text: "Speech", correct: false},
+            { text: "Essay", correct: false},
+        ]
+    },
+    {
+        question: "What is a short piece that presents, explains, argues, or reflects on an idea?",
+        answers: [
+            { text: "Essay", correct: true},
+            { text: "Speech", correct: false},
+            { text: "Novel", correct: false},
+            { text: "Memoir", correct: false},
+        ]
+    },
+    {
+        question: "What is a written text intended to be spoken aloud to inform, persuade, or inspire?",
+        answers: [
+            { text: "Essay", correct: false},
+            { text: "Speech", correct: true},
+            { text: "Autobiography", correct: false},
+            { text: "Short Story", correct: false},
+        ]
+    },
+    // --- Poetry ---
+    {
+        question: "Which form conveys feelings through vivid language, rhythm, and sound?",
+        answers: [
+            { text: "Drama", correct: false},
+            { text: "Poetry", correct: true},
+            { text: "Prose", correct: false},
+            { text: "Essay", correct: false},
+        ]
+    },
+    {
+        question: "What is a 3-line poem with 5-7-5 syllables, often focused on nature?",
+        answers: [
+            { text: "Sonnet", correct: false},
+            { text: "Haiku", correct: true},
+            { text: "Limerick", correct: false},
+            { text: "Ballad", correct: false},
+        ]
+    },
+    {
+        question: "What is a 14-line poem with a specific rhyme scheme, often exploring love or reflection?",
+        answers: [
+            { text: "Sonnet", correct: true},
+            { text: "Haiku", correct: false},
+            { text: "Free Verse", correct: false},
+            { text: "Limerick", correct: false},
+        ]
+    },
+    {
+        question: "Which type of poem has no fixed rhyme or meter and mimics natural speech?",
+        answers: [
+            { text: "Sonnet", correct: false},
+            { text: "Free Verse", correct: true},
+            { text: "Ballad", correct: false},
+            { text: "Haiku", correct: false},
+        ]
+    },
+    {
+        question: "What is a humorous 5-line poem with an AABBA rhyme scheme?",
+        answers: [
+            { text: "Haiku", correct: false},
+            { text: "Sonnet", correct: false},
+            { text: "Limerick", correct: true},
+            { text: "Free Verse", correct: false},
+        ]
+    },
+    {
+        question: "What is a narrative poem that tells a story, often meant to be sung?",
+        answers: [
+            { text: "Sonnet", correct: false},
+            { text: "Free Verse", correct: false},
+            { text: "Ballad", correct: true},
+            { text: "Haiku", correct: false},
+        ]
+    },
+    // --- Drama ---
+    {
+        question: "What form of literature is written to be performed by actors through dialogue and movement?",
+        answers: [
+            { text: "Poetry", correct: false},
+            { text: "Prose", correct: false},
+            { text: "Drama", correct: true},
+            { text: "Novel", correct: false},
+        ]
+    },
+    {
+        question: "In drama, what is a serious play where the main character faces downfall or death?",
+        answers: [
+            { text: "Tragedy", correct: true},
+            { text: "Comedy", correct: false},
+            { text: "Musical", correct: false},
+            { text: "Historical Drama", correct: false},
+        ]
+    },
+    {
+        question: "What is a humorous play with light-hearted events, often ending happily?",
+        answers: [
+            { text: "Tragedy", correct: false},
+            { text: "Comedy", correct: true},
+            { text: "Musical", correct: false},
+            { text: "Myth", correct: false},
+        ]
+    },
+    {
+        question: "What is a play where music, songs, and dance help tell the story?",
+        answers: [
+            { text: "Historical Drama", correct: false},
+            { text: "Comedy", correct: false},
+            { text: "Musical", correct: true},
+            { text: "Haiku", correct: false},
+        ]
+    },
+    {
+        question: "What is a play based on real historical events or figures?",
+        answers: [
+            { text: "Comedy", correct: false},
+            { text: "Tragedy", correct: false},
+            { text: "Historical Drama", correct: true},
+            { text: "Musical", correct: false},
+        ]
+    },
+    // --- Literary Elements and Devices ---
+    {
+        question: "What is the broad category that encompasses both literary elements and techniques?",
+        answers: [
+            { text: "Literary devices", correct: true},
+            { text: "Plot", correct: false},
+            { text: "Setting", correct: false},
+            { text: "Poetry", correct: false},
+        ]
+    },
+    {
+        question: "What are the basic components of storytelling that shape the structure and meaning of text?",
+        answers: [
+            { text: "Literary techniques", correct: false},
+            { text: "Literary Elements", correct: true},
+            { text: "Plot", correct: false},
+            { text: "POV", correct: false},
+        ]
+    },
+    {
+        question: "What refers to the sequence of events that make up a story?",
+        answers: [
+            { text: "Conflict", correct: false},
+            { text: "Plot", correct: true},
+            { text: "Setting", correct: false},
+            { text: "Character", correct: false},
+        ]
+    },
+    // --- Plot Structure ---
+    {
+        question: "Which part of the plot introduces the setting, characters, and initial situation?",
+        answers: [
+            { text: "Rising Action", correct: false},
+            { text: "Exposition", correct: true},
+            { text: "Climax", correct: false},
+            { text: "Resolution", correct: false},
+        ]
+    },
+    {
+        question: "What is the series of events that build suspense and develop the central conflict?",
+        answers: [
+            { text: "Falling Action", correct: false},
+            { text: "Rising Action", correct: true},
+            { text: "Exposition", correct: false},
+            { text: "Resolution", correct: false},
+        ]
+    },
+    {
+        question: "What is the most intense point of the story where the conflict reaches its peak?",
+        answers: [
+            { text: "Exposition", correct: false},
+            { text: "Climax", correct: true},
+            { text: "Falling Action", correct: false},
+            { text: "Resolution", correct: false},
+        ]
+    },
+    {
+        question: "What are the events that follow the climax and lead toward resolution?",
+        answers: [
+            { text: "Rising Action", correct: false},
+            { text: "Falling Action", correct: true},
+            { text: "Exposition", correct: false},
+            { text: "Climax", correct: false},
+        ]
+    },
+    {
+        question: "What is the conclusion where conflicts are resolved and the ending revealed?",
+        answers: [
+            { text: "Exposition", correct: false},
+            { text: "Climax", correct: false},
+            { text: "Resolution", correct: true},
+            { text: "Rising Action", correct: false},
+        ]
+    },
+    // --- Setting, Character, Conflict ---
+    {
+        question: "What refers to the time and place where a story takes place?",
+        answers: [
+            { text: "Plot", correct: false},
+            { text: "Settings", correct: true},
+            { text: "Character", correct: false},
+            { text: "POV", correct: false},
+        ]
+    },
+    {
+        question: "What refers to the people, animals, or beings in a story?",
+        answers: [
+            { text: "Protagonist", correct: false},
+            { text: "Character", correct: true},
+            { text: "Antagonist", correct: false},
+            { text: "POV", correct: false},
+        ]
+    },
+    {
+        question: "Who is the main character in a story?",
+        answers: [
+            { text: "Antagonist", correct: false},
+            { text: "Protagonist", correct: true},
+            { text: "Character vs. Self", correct: false},
+            { text: "Narrator", correct: false},
+        ]
+    },
+    {
+        question: "Who is the character that opposes the protagonist?",
+        answers: [
+            { text: "Antagonist", correct: true},
+            { text: "Protagonist", correct: false},
+            { text: "Hero", correct: false},
+            { text: "Legend", correct: false},
+        ]
+    },
+    {
+        question: "What refers to the struggle between opposing forces that drives a story forward?",
+        answers: [
+            { text: "Resolution", correct: false},
+            { text: "Setting", correct: false},
+            { text: "Conflict", correct: true},
+            { text: "Plot", correct: false},
+        ]
+    },
+    {
+        question: "What type of conflict involves a character struggling against another due to opposing goals?",
+        answers: [
+            { text: "Character vs. Self", correct: false},
+            { text: "Character vs. Character", correct: true},
+            { text: "Character vs. Society", correct: false},
+            { text: "Character vs. Fate", correct: false},
+        ]
+    },
+    {
+        question: "What is an internal conflict where a character struggles with emotions or decisions?",
+        answers: [
+            { text: "Character vs. Character", correct: false},
+            { text: "Character vs. Self", correct: true},
+            { text: "Character vs. Society", correct: false},
+            { text: "Character vs. Divine Will", correct: false},
+        ]
+    },
+    {
+        question: "What conflict involves a character challenging societal norms, laws, or expectations?",
+        answers: [
+            { text: "Character vs. Self", correct: false},
+            { text: "Character vs. Character", correct: false},
+            { text: "Character vs. Society", correct: true},
+            { text: "Character vs. Mortality", correct: false},
+        ]
+    },
+    // --- POV ---
+    {
+        question: "What refers to the lens through which the story is told?",
+        answers: [
+            { text: "Conflict", correct: false},
+            { text: "POV", correct: true},
+            { text: "Setting", correct: false},
+            { text: "Exposition", correct: false},
+        ]
+    },
+    {
+        question: "Which POV is narrated by a main character using pronouns like I, me, and my?",
+        answers: [
+            { text: "Third Person Limited", correct: false},
+            { text: "Third Person Omniscient", correct: false},
+            { text: "First Person", correct: true},
+            { text: "Second Person", correct: false},
+        ]
+    },
+    {
+        question: "Which POV focuses on the thoughts/experiences of only one character using he, she, or they?",
+        answers: [
+            { text: "First Person", correct: false},
+            { text: "Third Person Limited", correct: true},
+            { text: "Third Person Omniscient", correct: false},
+            { text: "Narrator", correct: false},
+        ]
+    },
+    {
+        question: "In which POV does the narrator know and describe the thoughts of multiple characters?",
+        answers: [
+            { text: "First Person", correct: false},
+            { text: "Third Person Limited", correct: false},
+            { text: "Third Person Omniscient", correct: true},
+            { text: "Character vs. Self", correct: false},
+        ]
+    },
+    // --- Literary Techniques ---
+    {
+        question: "What are the specific methods authors use to convey meaning and engage the reader?",
+        answers: [
+            { text: "Literary techniques", correct: true},
+            { text: "Literary Elements", correct: false},
+            { text: "Plot structure", correct: false},
+            { text: "Setting", correct: false},
+        ]
+    },
+    {
+        question: "What is the use of objects or events to represent deeper meanings?",
+        answers: [
+            { text: "Metaphor", correct: false},
+            { text: "Symbolism", correct: true},
+            { text: "Irony", correct: false},
+            { text: "Imagery", correct: false},
+        ]
+    },
+    {
+        question: "What is a direct comparison between two unlike things without using 'like' or 'as'?",
+        answers: [
+            { text: "Simile", correct: false},
+            { text: "Metaphor", correct: true},
+            { text: "Symbolism", correct: false},
+            { text: "Imagery", correct: false},
+        ]
+    },
+    {
+        question: "What refers to a contrast between expectations and reality?",
+        answers: [
+            { text: "Irony", correct: true},
+            { text: "Metaphor", correct: false},
+            { text: "Symbolism", correct: false},
+            { text: "Setting", correct: false},
+        ]
+    },
+    {
+        question: "What type of irony involves saying the opposite of what is meant?",
+        answers: [
+            { text: "Situational Irony", correct: false},
+            { text: "Verbal Irony", correct: true},
+            { text: "Metaphor", correct: false},
+            { text: "Imagery", correct: false},
+        ]
+    },
+    {
+        question: "What is situational irony?",
+        answers: [
+            { text: "Saying the opposite of what is meant", correct: false},
+            { text: "When the outcome is the opposite of what was expected", correct: true},
+            { text: "Vivid sensory language", correct: false},
+            { text: "A comparison using 'like' or 'as'", correct: false},
+        ]
+    },
+    {
+        question: "What is the use of vivid, sensory language to create mental pictures?",
+        answers: [
+            { text: "Symbolism", correct: false},
+            { text: "Metaphor", correct: false},
+            { text: "Irony", correct: false},
+            { text: "Imagery", correct: true},
+        ]
+    },
+    // --- Periods and Ancient Lit ---
+    {
+        question: "What refers to the earliest written works created before 500 BCE?",
+        answers: [
+            { text: "Medieval literature", correct: false},
+            { text: "Ancient literature", correct: true},
+            { text: "Modern literature", correct: false},
+            { text: "Renaissance", correct: false},
+        ]
+    },
+    {
+        question: "What is the practice of passing down stories through spoken words across generations?",
+        answers: [
+            { text: "Oral tradition", correct: true},
+            { text: "Literary devices", correct: false},
+            { text: "Exposition", correct: false},
+            { text: "Epics", correct: false},
+        ]
+    },
+    {
+        question: "What are long narrative poems that recount the heroic journeys of legendary figures?",
+        answers: [
+            { text: "Haiku", correct: false},
+            { text: "Epics", correct: true},
+            { text: "Short Stories", correct: false},
+            { text: "Essays", correct: false},
+        ]
+    },
+    {
+        question: "Which theme features figures whose actions reflect courage, honor, and loyalty?",
+        answers: [
+            { text: "Fate and Divine Will", correct: false},
+            { text: "The Human Condition", correct: false},
+            { text: "Heroism and Moral Values", correct: true},
+            { text: "Symbolism", correct: false},
+        ]
+    },
+    {
+        question: "What theme explores how gods or supernatural forces shape human lives?",
+        answers: [
+            { text: "Heroism", correct: false},
+            { text: "Fate and Divine Will", correct: true},
+            { text: "The Human Condition", correct: false},
+            { text: "Oral Tradition", correct: false},
+        ]
+    },
+    {
+        question: "Which theme reflects on the fragility of life and the inevitability of death?",
+        answers: [
+            { text: "Heroism", correct: false},
+            { text: "Fate", correct: false},
+            { text: "The Human Condition and Mortality", correct: true},
+            { text: "Irony", correct: false},
+        ]
+    }
+];
+    
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+
+    shuffle(questions);
+    questions.forEach(q => shuffle(q.answers));
+
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+});
+
+
+startQuiz();
+
+</script>
+</html>
