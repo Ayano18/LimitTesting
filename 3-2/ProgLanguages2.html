@@ -104,22 +104,152 @@ body{
 <script>
 
     const questions = [
+    // --- Syntax and Source ---
     {
-        question: "Template",
+        question: "What is defined as the form of expressions, statements, and program units in a language?",
         answers: [
-            { text: "answer", correct: false},
-            { text: "answer", correct: false},
-            { text: "answer", correct: true},
-            { text: "answer", correct: false},
+            { text: "Semantics", correct: false},
+            { text: "Syntax", correct: true},
+            { text: "Meta language", correct: false},
+            { text: "Logic", correct: false},
         ]
     },
     {
-        question: "Template",
+        question: "What is a program written in a high-level programming language called?",
         answers: [
-            { text: "answer", correct: false},
-            { text: "answer", correct: true},
-            { text: "answer", correct: false},
-            { text: "answer", correct: false},
+            { text: "Source file", correct: false},
+            { text: "Meta language", correct: false},
+            { text: "Source code", correct: true},
+            { text: "Abstract tree", correct: false},
+        ]
+    },
+    {
+        question: "What is the file containing the source code called?",
+        answers: [
+            { text: "Source file", correct: true},
+            { text: "Syntax file", correct: false},
+            { text: "Binary file", correct: false},
+            { text: "Production rule", correct: false},
+        ]
+    },
+    // --- Language Components ---
+    {
+        question: "What are reserved words that have a special meaning in a programming language?",
+        answers: [
+            { text: "Identifiers", correct: false},
+            { text: "Operators", correct: false},
+            { text: "Keywords", correct: true},
+            { text: "Punctuation", correct: false},
+        ]
+    },
+    {
+        question: "Which components are symbols that perform operations on variables and values?",
+        answers: [
+            { text: "Keywords", correct: false},
+            { text: "Operators", correct: true},
+            { text: "Identifiers", correct: false},
+            { text: "BNF rules", correct: false},
+        ]
+    },
+    {
+        question: "Which category includes symbols such as commas, semicolons, and braces?",
+        answers: [
+            { text: "Punctuation", correct: true},
+            { text: "Keywords", correct: false},
+            { text: "Operators", correct: false},
+            { text: "Production rules", correct: false},
+        ]
+    },
+    {
+        question: "What are names that identify user-defined items in a program?",
+        answers: [
+            { text: "Keywords", correct: false},
+            { text: "Punctuation", correct: false},
+            { text: "Identifiers", correct: true},
+            { text: "Meta language", correct: false},
+        ]
+    },
+    // --- Formal Descriptions ---
+    {
+        question: "What is a language or set of terms used to describe another language?",
+        answers: [
+            { text: "Source code", correct: false},
+            { text: "Static semantics", correct: false},
+            { text: "Meta language", correct: true},
+            { text: "Axiomatic semantics", correct: false},
+        ]
+    },
+    {
+        question: "What are the core components of BNF grammar, also called production rules?",
+        answers: [
+            { text: "Static semantics", correct: false},
+            { text: "BNF rules", correct: true},
+            { text: "Abstract Syntax Trees", correct: false},
+            { text: "Identifiers", correct: false},
+        ]
+    },
+    {
+        question: "What is a tree representation of the syntactic structure of source code?",
+        answers: [
+            { text: "BNF tree", correct: false},
+            { text: "Semantic map", correct: false},
+            { text: "Abstract Syntax Tree", correct: true},
+            { text: "Source file", correct: false},
+        ]
+    },
+    // --- Semantics ---
+    {
+        question: "What refers to the meaning of expressions, statements, and program units?",
+        answers: [
+            { text: "Syntax", correct: false},
+            { text: "Punctuation", correct: false},
+            { text: "Semantics", correct: true},
+            { text: "Identifiers", correct: false},
+        ]
+    },
+    {
+        question: "Which type of semantics involves checking rules simultaneously, such as scope resolution?",
+        answers: [
+            { text: "Dynamic semantics", correct: false},
+            { text: "Static semantics", correct: true},
+            { text: "Operational semantics", correct: false},
+            { text: "Denotational semantics", correct: false},
+        ]
+    },
+    {
+        question: "Which type of semantics refers to the behavior of a program when it is run?",
+        answers: [
+            { text: "Static semantics", correct: false},
+            { text: "Dynamic semantics", correct: true},
+            { text: "BNF rules", correct: false},
+            { text: "Punctuation", correct: false},
+        ]
+    },
+    {
+        question: "Which semantics describes behavior in terms of abstract machine execution, step by step?",
+        answers: [
+            { text: "Denotational semantics", correct: false},
+            { text: "Axiomatic semantics", correct: false},
+            { text: "Operational semantics", correct: true},
+            { text: "Static semantics", correct: false},
+        ]
+    },
+    {
+        question: "Which semantics maps syntactic constructs to mathematical objects for an abstract description?",
+        answers: [
+            { text: "Operational semantics", correct: false},
+            { text: "Denotational semantics", correct: true},
+            { text: "Axiomatic semantics", correct: false},
+            { text: "Dynamic semantics", correct: false},
+        ]
+    },
+    {
+        question: "Which semantics uses logical assertions (preconditions/postconditions) to specify program properties?",
+        answers: [
+            { text: "Operational semantics", correct: false},
+            { text: "Denotational semantics", correct: false},
+            { text: "Axiomatic semantics", correct: true},
+            { text: "Static semantics", correct: false},
         ]
     }
 ];
