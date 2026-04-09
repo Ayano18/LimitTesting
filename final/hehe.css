@@ -6,6 +6,93 @@
     --silver-grad: linear-gradient(135deg, #bdc3c7 0%, #ffffff 50%, #8e9eab 100%);
 }
 
+/* --- RESPONSIVE MEDIA QUERIES --- */
+
+/* Laptop / Large Desktop (Default styles above apply here) */
+@media (min-width: 1025px) {
+    .roadmap { max-width: 600px; }
+}
+
+/* Tablet / Small Laptop */
+@media (max-width: 1024px) {
+    .circle-profile-frame {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .timer-box {
+        min-width: 70px;
+        padding: 10px;
+    }
+
+    .program-list-card {
+        padding: 20px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 640px) {
+    /* Adjusting Splash Screen Text */
+    .splash-content h1 {
+        font-size: 3.5rem !important; /* Forces smaller size on mobile */
+        letter-spacing: 0.1em;
+    }
+
+    /* Circle Profile Size for small screens */
+    .circle-profile-frame {
+        width: 220px;
+        height: 220px;
+    }
+
+    /* Adjusting the Timer/Countdown grid */
+    #countdown {
+        gap: 8px;
+    }
+
+    .timer-box {
+        min-width: 65px;
+        padding: 8px;
+    }
+
+    .timer-box span {
+        font-size: 1.2rem;
+    }
+
+    /* Roadmap spacing for mobile */
+    .roadmap-spine {
+        left: 15px;
+    }
+    
+    .roadmap-node {
+        width: 32px;
+        height: 32px;
+        font-size: 0.7rem;
+    }
+    
+    .roadmap-item {
+        gap: 15px;
+    }
+
+    .roadmap-card {
+        padding: 15px;
+    }
+
+    /* Program List Cards - Ensuring they don't look too cramped */
+    .program-list-card {
+        margin-bottom: 1rem;
+    }
+
+    .list-names {
+        font-size: 0.85rem;
+    }
+
+    /* Navigation/Buttons */
+    .maps-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
 body { font-family: 'Montserrat', sans-serif; overflow-x: hidden; background-color: var(--navy); }
 
 /* Metallic Shimmer Effect */
