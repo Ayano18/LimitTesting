@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Testing</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #001e4d;
+}
+.app{
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz{
+    padding: 20px 0;
+}
+.quiz h2{
+    font-size: 18px;
+    color: #001e4d;
+    font-weight: 600;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.correct{
+    background: #9aeabc;
+}
+.incorrect{
+    background: #ff9393;
+}
+    </style>
+</head>
+
+<body>
+    
+    <div class="app">
+            <h1>Handout </h1>
+            <div class="quiz">
+                <h2 id="question">Question Goes Here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                    <button class="btn">Answer 5</button>
+                    <button class="btn">Answer 6</button>
+                    <button class="btn">Answer 7</button>
+                    <button class="btn">Answer 8</button>
+                    <button class="btn">Answer 9</button>
+                    <button class="btn">Answer 10</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+</body>
+<script>
+
+    const questions = [
+    // --- Buttons and Images ---
+    {
+        question: "What is usually a rectangle or rounded rectangle with a descriptive caption or icon?",
+        answers: [
+            { text: "Imageview", correct: false},
+            { text: "Button", correct: true},
+            { text: "Seekbar", correct: false},
+            { text: "Spinner", correct: false},
+        ]
+    },
+    {
+        question: "Which button appears lifted from the screen with shading to indicate it can be tapped?",
+        answers: [
+            { text: "Flat button", correct: false},
+            { text: "Raised button", correct: true},
+            { text: "Floating action button", correct: false},
+            { text: "Toggle button", correct: false},
+        ]
+    },
+    {
+        question: "What is a text-only button that looks flat and doesn't have a shadow?",
+        answers: [
+            { text: "Flat button or borderless button", correct: true},
+            { text: "Raised button", correct: false},
+            { text: "Switch", correct: false},
+            { text: "Radio button", correct: false},
+        ]
+    },
+    {
+        question: "Which component is specifically used to display image resources?",
+        answers: [
+            { text: "Edit text", correct: false},
+            { text: "Spinner", correct: false},
+            { text: "Imageview", correct: true},
+            { text: "Seekbar", correct: false},
+        ]
+    },
+    {
+        question: "What is a circular button that appears to float above the layout?",
+        answers: [
+            { text: "Radio button", correct: false},
+            { text: "Raised button", correct: false},
+            { text: "Floating action button", correct: true},
+            { text: "Checkbox", correct: false},
+        ]
+    },
+    // --- Input Controls ---
+    {
+        question: "What occurs when a user places one or more fingers on the touchscreen?",
+        answers: [
+            { text: "Event listener", correct: false},
+            { text: "Touch gesture", correct: true},
+            { text: "Seekbar progress", correct: false},
+            { text: "Toggle", correct: false},
+        ]
+    },
+    {
+        question: "What are the interactive elements in the app UI that accept data input called?",
+        answers: [
+            { text: "ViewGroups", correct: false},
+            { text: "Input controls", correct: true},
+            { text: "Event handlers", correct: false},
+            { text: "Layouts", correct: false},
+        ]
+    },
+    {
+        question: "Which control is used for entering and modifying text?",
+        answers: [
+            { text: "Spinner", correct: false},
+            { text: "Edit text", correct: true},
+            { text: "Checkbox", correct: false},
+            { text: "Switch", correct: false},
+        ]
+    },
+    {
+        question: "Which control is used for selecting one or more options from a set?",
+        answers: [
+            { text: "Radio button", correct: false},
+            { text: "Check box", correct: true},
+            { text: "Spinner", correct: false},
+            { text: "Toggle button", correct: false},
+        ]
+    },
+    {
+        question: "Which control restricts the user to select only one option from a set?",
+        answers: [
+            { text: "Radio button", correct: true},
+            { text: "Check box", correct: false},
+            { text: "Seekbar", correct: false},
+            { text: "Switch", correct: false},
+        ]
+    },
+    {
+        question: "What is a drop down menu for selecting only one option called?",
+        answers: [
+            { text: "Seekbar", correct: false},
+            { text: "Spinner", correct: true},
+            { text: "Checkbox", correct: false},
+            { text: "Edit text", correct: false},
+        ]
+    },
+    {
+        question: "What lets the user change a setting between two states?",
+        answers: [
+            { text: "Toggle button", correct: true},
+            { text: "Spinner", correct: false},
+            { text: "Imageview", correct: false},
+            { text: "Radio button", correct: false},
+        ]
+    },
+    {
+        question: "Which type of toggle button provides a slider for selection?",
+        answers: [
+            { text: "Seekbar", correct: false},
+            { text: "Switch", correct: true},
+            { text: "Floating action button", correct: false},
+            { text: "Radio button", correct: false},
+        ]
+    },
+    {
+        question: "Which component is dragged to the left or right to indicate a current progress level?",
+        answers: [
+            { text: "Seekbar", correct: true},
+            { text: "Switch", correct: false},
+            { text: "Spinner", correct: false},
+            { text: "Checkbox", correct: false},
+        ]
+    },
+    // --- Events ---
+    {
+        question: "What occurs when the user interacts with an input control or item in the UI?",
+        answers: [
+            { text: "Gesture", correct: false},
+            { text: "Event", correct: true},
+            { text: "Layout inflation", correct: false},
+            { text: "Instance", correct: false},
+        ]
+    },
+    {
+        question: "What is an interface in the View class that contains a single callback method?",
+        answers: [
+            { text: "Event listener", correct: true},
+            { text: "Event handler", correct: false},
+            { text: "Input control", correct: false},
+            { text: "Activity life cycle", correct: false},
+        ]
+    }
+];
+    
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+
+    shuffle(questions);
+    questions.forEach(q => shuffle(q.answers));
+
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+});
+
+
+startQuiz();
+
+</script>
+</html>

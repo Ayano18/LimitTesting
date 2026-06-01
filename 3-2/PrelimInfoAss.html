@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Testing</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #001e4d;
+}
+.app{
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz{
+    padding: 20px 0;
+}
+.quiz h2{
+    font-size: 18px;
+    color: #001e4d;
+    font-weight: 600;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.correct{
+    background: #9aeabc;
+}
+.incorrect{
+    background: #ff9393;
+}
+    </style>
+</head>
+
+<body>
+    
+    <div class="app">
+            <h1>Prelim Exam of Info Assurance </h1>
+            <div class="quiz">
+                <h2 id="question">Question Goes Here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                    <button class="btn">Answer 5</button>
+                    <button class="btn">Answer 6</button>
+                    <button class="btn">Answer 7</button>
+                    <button class="btn">Answer 8</button>
+                    <button class="btn">Answer 9</button>
+                    <button class="btn">Answer 10</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+</body>
+<script>
+
+    const questions = [
+    {
+        question: "It is the practice of employing computer and network skills to assist organizations in testing their network security for possible loopholes and vulnerabilities.",
+        answers: [
+            { text: "Ethical hacking", correct: true},
+            { text: "Risk assessment", correct: false},
+            { text: "Disaster recovery", correct: false},
+            { text: "Computer forensics", correct: false},
+        ]
+    },
+    {
+        question: "These types of threat actors help both hackers find various vulnerabilities in a system and vendors improve products by checking limitations to make them more secure.",
+        answers: [
+            { text: "Gray hats", correct: true},
+            { text: "Black hats", correct: false},
+            { text: "White hats", correct: false},
+            { text: "Organized hackers", correct: false},
+        ]
+    },
+    {
+        question: "They are also known as security analysts or ethical hackers.",
+        answers: [
+            { text: "Black hats", correct: false},
+            { text: "White hats", correct: true},
+            { text: "Hacker teams", correct: false},
+            { text: "Suicide hackers", correct: false},
+        ]
+    },
+    {
+        question: "This element of information security refers to the trustworthiness of data or resources in the prevention of improper and unauthorized changes.",
+        answers: [
+            { text: "Integrity", correct: true},
+            { text: "Availability", correct: false},
+            { text: "Authenticity", correct: false},
+            { text: "Confidentiality", correct: false},
+        ]
+    },
+    {
+        question: "It provides federal protection for the individually identifiable health information held by covered entities and their business associates.",
+        answers: [
+            { text: "PCI/DSS", correct: false},
+            { text: "HIPAA Privacy Rule", correct: true},
+            { text: "Sarbanes-Oxley Act", correct: false},
+            { text: "ISO/IEC 27001:2013", correct: false},
+        ]
+    },
+    {
+        question: "It is a tool used to automatically gather critical information such as lists of meta tags, e-mail addresses, and phone and fax numbers from the target website.",
+        answers: [
+            { text: "Hyena", correct: false},
+            { text: "MegaPing", correct: false},
+            { text: "SmartWhois", correct: false},
+            { text: "Web Data Extractor", correct: true},
+        ]
+    },
+    {
+        question: "This is a hacking phase wherein an attacker employs steganography and tunneling techniques to retain access to the victim's system, remain unnoticed, and remove evidence that might lead to prosecution.",
+        answers: [
+            { text: "Scanning", correct: false},
+            { text: "Preparatory", correct: false},
+            { text: "Clearing Tracks", correct: true},
+            { text: "Reconnaissance", correct: false},
+        ]
+    },
+    {
+        question: "It is the act of exploiting system vulnerabilities and compromising security controls to gain unauthorized access.",
+        answers: [
+            { text: "Sniffing", correct: false},
+            { text: "Hacking", correct: true},
+            { text: "Spoofing", correct: false},
+            { text: "Footprinting", correct: false},
+        ]
+    },
+    {
+        question: "It is the civilian act designed to protect investors and the public by increasing the accuracy and reliability of corporate disclosures.",
+        answers: [
+            { text: "HIPAA", correct: false},
+            { text: "PCI/DSS", correct: false},
+            { text: "Sarbanes-Oxley Act", correct: true},
+            { text: "ISO/IEC 27001:2013", correct: false},
+        ]
+    },
+    {
+        question: "It is considered the art of creating complex search engine queries.",
+        answers: [
+            { text: "MegaPing", correct: false},
+            { text: "Shell Phish", correct: false},
+            { text: "Reconnaissance Hacking", correct: false},
+            { text: "Advanced Google Hacking", correct: true},
+        ]
+    },
+    {
+        question: "This element of information security refers to the quality of being genuine or uncorrupted as a characteristic of any communication, documents, or data.",
+        answers: [
+            { text: "Integrity", correct: false},
+            { text: "Availability", correct: false},
+            { text: "Authenticity", correct: true},
+            { text: "Confidentiality", correct: false},
+        ]
+    },
+    {
+        question: "This type of threat actor includes groups of individuals or communities involved in organized, planned, and prolonged criminal activities and who exploit victims from distinct jurisdictions on the Internet, making them difficult to locate.",
+        answers: [
+            { text: "Insiders", correct: false},
+            { text: "Black Hats", correct: false},
+            { text: "Industrial Spies", correct: false},
+            { text: "Criminal Syndicates", correct: true},
+        ]
+    },
+    {
+        question: "This element of information security refers to the assurance that the systems responsible for delivering, storing, and processing information are accessible when required by authorized users.",
+        answers: [
+            { text: "Integrity", correct: false},
+            { text: "Availability", correct: true},
+            { text: "Authenticity", correct: false},
+            { text: "Confidentiality", correct: false},
+        ]
+    },
+    {
+        question: "It is one of the MOST stringent privacy and security laws globally, imposing obligations on organizations anywhere that target or collect data related to people in the EU.",
+        answers: [
+            { text: "GDPR", correct: true},
+            { text: "DMCA", correct: false},
+            { text: "FISMA", correct: false},
+            { text: "ISO/IEC", correct: false},
+        ]
+    },
+    {
+        question: "It is a phase of the cyber kill chain methodology wherein an adversary distributes USB drives containing a malicious payload to the employees of the target organization.",
+        answers: [
+            { text: "Delivery", correct: true},
+            { text: "Installation", correct: false},
+            { text: "Exploitation", correct: false},
+            { text: "Weaponization", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following threats results from using flawed coding and improper sanitization of input and output in digital platforms?",
+        answers: [
+            { text: "Worms", correct: false},
+            { text: "IoT Threat", correct: false},
+            { text: "Replay Attacks", correct: false},
+            { text: "Web Application Threats", correct: true},
+        ]
+    },
+    {
+        question: "Which of the following Nbtstat parameters lists the contents of the NetBIOS name cache, the table of NetBIOS names, and their resolved IP addresses?",
+        answers: [
+            { text: "-c", correct: true},
+            { text: "-r", correct: false},
+            { text: "-R", correct: false},
+            { text: "-S", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following titles of the Sarbanes-Oxley Act (SOX) mandates that only senior executives should take individual responsibility for the accuracy and completeness of corporate financial reports?",
+        answers: [
+            { text: "Title X: Corporate Tax Returns", correct: false},
+            { text: "Title III: Corporate Responsibility", correct: true},
+            { text: "Title V: Analyst Conflicts of Interest", correct: false},
+            { text: "Title VII: Studies and Reports", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following phases involves an attacker generating a backdoor file and binding it with a legitimate application before sending it to the target?",
+        answers: [
+            { text: "Delivery", correct: false},
+            { text: "Installation", correct: false},
+            { text: "Exploitation", correct: false},
+            { text: "Weaponization", correct: true},
+        ]
+    },
+    {
+        question: "John, a professional hacker, was hired by a government agency to penetrate, gain top-secret information from, and damage other government agencies' information systems or networks. Which of the following classes of hackers does John fall into?",
+        answers: [
+            { text: "Hacker Teams", correct: false},
+            { text: "Industrial Spies", correct: false},
+            { text: "Cyber Terrorists", correct: false},
+            { text: "State-Sponsored Hackers", correct: true},
+        ]
+    },
+    {
+        question: "Which of the following BEST describes the formula used to understand how attackers exploit systems, as noted in the motives and goals section?",
+        answers: [
+            { text: "Attacks = Risk + Threat + Impact", correct: false},
+            { text: "Attacks = Tools + Access + Target", correct: false},
+            { text: "Attacks = Exploit + Payload + Vulnerability", correct: false},
+            { text: "Attacks = Motive (Goal) + Method + Vulnerability", correct: true},
+        ]
+    },
+    {
+        question: "Which of the following is required to ensure the safe handling of cardholder information using tools, specifications, and support resources?",
+        answers: [
+            { text: "GDPR", correct: false},
+            { text: "HIPAA", correct: false},
+            { text: "PCI DSS", correct: true},
+            { text: "ISO/IEC 27001", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following ensures that client data acquired during a penetration test remains confidential?",
+        answers: [
+            { text: "Proxy log policy", correct: false},
+            { text: "Network segmentation", correct: false},
+            { text: "Session token validator", correct: false},
+            { text: "Nondisclosure agreement", correct: true},
+        ]
+    },
+    {
+        question: "Which of the following ISO/IEC standards specifies the requirements for establishing, implementing, maintaining, and continually improving an information security management system within the context of an organization?",
+        answers: [
+            { text: "ISO/IEC 27031", correct: false},
+            { text: "ISO/IEC 270032", correct: false},
+            { text: "ISO/IEC 27001:2012", correct: false},
+            { text: "ISO/IEC 27001:2013", correct: true},
+        ]
+    },
+    {
+        question: "Which of the following should be done last when performing a security audit of an organization which will help ensures that the test is organized, efficient, and ethical?",
+        answers: [
+            { text: "Conduct the test", correct: false},
+            { text: "Present the report findings to the client", correct: true},
+            { text: "Prepare and sign NDA documents with the client", correct: false},
+            { text: "Analyze the results of the testing and prepare a report", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following phases involves hacker activities such as open ports detection and live hosts identification before exploitation?",
+        answers: [
+            { text: "Scanning", correct: true},
+            { text: "Gaining Access", correct: false},
+            { text: "Reconnaissance", correct: false},
+            { text: "Maintaining Access", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following is considered a non-technical skill?",
+        answers: [
+            { text: "A computer expert adept in technical domains", correct: false},
+            { text: "The knowledge of security areas and related issues", correct: false},
+            { text: "Commitment to an organization's security policies", correct: true},
+            { text: "High technical knowledge of how to launch sophisticated attacks", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following represents the phase where the attacker successfully executes malicious code on a victim's system through a vulnerability?",
+        answers: [
+            { text: "Exploitation", correct: true},
+            { text: "Installation", correct: false},
+            { text: "Reconnaissance", correct: false},
+            { text: "Command and Control", correct: false},
+        ]
+    },
+    {
+        question: "Mark, a professional hacker, targets his opponent's website. He finds susceptible user inputs, injects malicious SQL code into the database, and tampers with critical information. Which of the following types of attack did Mark perform in the above scenario?",
+        answers: [
+            { text: "Active Attack", correct: true},
+            { text: "Insider Attack", correct: false},
+            { text: "Passive Attack", correct: false},
+            { text: "Close-in Attack", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following must a healthcare provider follow to ensure the confidentiality, integrity, and availability of electronically protected health information?",
+        answers: [
+            { text: "PCI DSS", correct: false},
+            { text: "DPA 2018", correct: false},
+            { text: "FISMA Guidelines", correct: false},
+            { text: "HIPAA Security Rule", correct: true},
+        ]
+    },
+    {
+        question: "A forensic team discovered a persistent backdoor that had been left on a compromised device, enabling external command and control for weeks. How should the security team prevent this from happening again?",
+        answers: [
+            { text: "Require daily user reauthentication", correct: false},
+            { text: "Deploy endpoint monitoring to detect and block covert command channels", correct: true},
+            { text: "Log all server traffic and review monthly to ensure compliance and overall security", correct: false},
+            { text: "Disable all remote access tools from corporate machines outside office hours", correct: false},
+        ]
+    },
+    {
+        question: "An attacker successfully performed TCP scans and identified multiple open ports over several days without being flagged. What could have BEST prevented the lack of detection?",
+        answers: [
+            { text: "Block all non-TCP traffic entirely", correct: false},
+            { text: "Ignore ICMP requests to reduce exposure", correct: false},
+            { text: "Use intrusion detection systems with rules for repeated scanning behavior", correct: true},
+            { text: "Rely on antivirus logs for network anomaly detection and flag suspicious accounts", correct: false},
+        ]
+    },
+    {
+        question: "A systems administrator was discovered copying confidential blueprints to an external drive during off-hours using privileged access. Security logs show no anomalies, and antivirus reported no issues. What action BEST prevents recurrence of this insider breach?",
+        answers: [
+            { text: "Train employees to recognize social engineering tactics", correct: false},
+            { text: "Set stricter password policies and enforce quarterly changes", correct: false},
+            { text: "Enable file encryption for all sensitive data in shared folders", correct: false},
+            { text: "Monitor privileged accounts with behavior analytics and access controls", correct: true},
+        ]
+    },
+    {
+        question: "An EU citizen requested their profile be removed from a digital service. Months later, the data was still visible in search results. What compliance failure occurred, and how should it be corrected?",
+        answers: [
+            { text: "Data was public, not private; no action required", correct: false},
+            { text: "The consent form was outdated, refresh user consent", correct: false},
+            { text: "Storage limitations and data subject rights under GDPR were not enforced", correct: true},
+            { text: "The dev team misinterpreted external hosting rules; restart the server from the service", correct: false},
+        ]
+    },
+    {
+        question: "A company's IDS detected no unusual activity, yet weeks later, the security team found logs showing system mapping and port scans targeting multiple hosts. What should the company have done to detect this reconnaissance earlier?",
+        answers: [
+            { text: "Review network logs only after scheduled scans", correct: false},
+            { text: "Use a more aggressive firewall with auto-blocking", correct: false},
+            { text: "Assign employees to manually inspect every access point", correct: false},
+            { text: "Monitor for indicators of active scanning behavior and port sweeps", correct: true},
+        ]
+    }
+];
+    
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+
+    shuffle(questions);
+    questions.forEach(q => shuffle(q.answers));
+
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+});
+
+
+startQuiz();
+
+</script>
+</html>

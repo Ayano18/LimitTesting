@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Testing</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #001e4d;
+}
+.app{
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz{
+    padding: 20px 0;
+}
+.quiz h2{
+    font-size: 18px;
+    color: #001e4d;
+    font-weight: 600;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.correct{
+    background: #9aeabc;
+}
+.incorrect{
+    background: #ff9393;
+}
+    </style>
+</head>
+
+<body>
+    
+    <div class="app">
+            <h1>Handout </h1>
+            <div class="quiz">
+                <h2 id="question">Question Goes Here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                    <button class="btn">Answer 5</button>
+                    <button class="btn">Answer 6</button>
+                    <button class="btn">Answer 7</button>
+                    <button class="btn">Answer 8</button>
+                    <button class="btn">Answer 9</button>
+                    <button class="btn">Answer 10</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+</body>
+<script>
+
+    const questions = [
+    // --- General Concepts ---
+    {
+        question: "What happens in the operation of programs due to misconceptions when solving a problem?",
+        answers: [
+            { text: "Syntax", correct: false},
+            { text: "Errors", correct: true},
+            { text: "Exceptions", correct: false},
+            { text: "Breakpoints", correct: false},
+        ]
+    },
+    {
+        question: "What is referred to as the 'grammar' in a programming language?",
+        answers: [
+            { text: "Syntax", correct: true},
+            { text: "Keywords", correct: false},
+            { text: "Debugging", correct: false},
+            { text: "Logic", correct: false},
+        ]
+    },
+    {
+        question: "What is the vocabulary or list of words used to build instructions?",
+        answers: [
+            { text: "Syntax", correct: false},
+            { text: "Reference", correct: false},
+            { text: "Keywords", correct: true},
+            { text: "Variables", correct: false},
+        ]
+    },
+    // --- Error Types ---
+    {
+        question: "Which error appears when code is ill-formed, such as typos or unmatching brackets?",
+        answers: [
+            { text: "Reference Error", correct: false},
+            { text: "Syntax Error", correct: true},
+            { text: "Type Error", correct: false},
+            { text: "Range Error", correct: false},
+        ]
+    },
+    {
+        question: "Which error occurs when the compiler tries to access a function or variable that doesn't exist?",
+        answers: [
+            { text: "Syntax Error", correct: false},
+            { text: "Reference Error", correct: true},
+            { text: "Type Error", correct: false},
+            { text: "Range Error", correct: false},
+        ]
+    },
+    {
+        question: "Which error occurs when a value is not of the expected type, like changing a constant?",
+        answers: [
+            { text: "Type Error", correct: true},
+            { text: "Reference Error", correct: false},
+            { text: "Syntax Error", correct: false},
+            { text: "Range Error", correct: false},
+        ]
+    },
+    {
+        question: "Which error is generated when a value is passed to a function outside its acceptable range?",
+        answers: [
+            { text: "Type Error", correct: false},
+            { text: "Reference Error", correct: false},
+            { text: "Range Error", correct: true},
+            { text: "Syntax Error", correct: false},
+        ]
+    },
+    // --- Exceptions and Flow ---
+    {
+        question: "What generates and throws specific objects with information about an encountered error?",
+        answers: [
+            { text: "Breakpoints", correct: false},
+            { text: "Exceptions", correct: true},
+            { text: "Keywords", correct: false},
+            { text: "Step Into", correct: false},
+        ]
+    },
+    {
+        question: "What are run-time errors or exceptions?",
+        answers: [
+            { text: "Errors that appear while the program is running", correct: true},
+            { text: "Errors found during compilation", correct: false},
+            { text: "Errors caused by typos in keywords", correct: false},
+            { text: "A list of reserved words", correct: false},
+        ]
+    },
+    {
+        question: "Which optional block of a try statement always executes regardless of an error?",
+        answers: [
+            { text: "Catch statement", correct: false},
+            { text: "Finally statement", correct: true},
+            { text: "Throw statement", correct: false},
+            { text: "Return statement", correct: false},
+        ]
+    },
+    // --- Debugging ---
+    {
+        question: "What is the part of troubleshooting in programming used to find and fix errors?",
+        answers: [
+            { text: "Inheritance", correct: false},
+            { text: "Debugging", correct: true},
+            { text: "Execution", correct: false},
+            { text: "Styling", correct: false},
+        ]
+    },
+    {
+        question: "What is used to pause the debugger execution at a specific line?",
+        answers: [
+            { text: "Resume", correct: false},
+            { text: "Breakpoint", correct: true},
+            { text: "Step Over", correct: false},
+            { text: "Step Out", correct: false},
+        ]
+    },
+    {
+        question: "Which command resumes the execution of the script typically?",
+        answers: [
+            { text: "Resume", correct: true},
+            { text: "Step Into", correct: false},
+            { text: "Step Over", correct: false},
+            { text: "Breakpoint", correct: false},
+        ]
+    },
+    {
+        question: "Which command treats a function as a set of instructions intended to be executed separately?",
+        answers: [
+            { text: "Step Over", correct: false},
+            { text: "Step Out", correct: false},
+            { text: "Step Into", correct: true},
+            { text: "Resume", correct: false},
+        ]
+    },
+    {
+        question: "Which command is used when the next instruction is a function call where the impact is uninterested?",
+        answers: [
+            { text: "Step Into", correct: false},
+            { text: "Step Over", correct: true},
+            { text: "Step Out", correct: false},
+            { text: "Resume", correct: false},
+        ]
+    },
+    {
+        question: "Which command allows the user to immediately jump out of a function where the code is paused?",
+        answers: [
+            { text: "Step Into", correct: false},
+            { text: "Step Over", correct: false},
+            { text: "Step Out", correct: true},
+            { text: "Resume", correct: false},
+        ]
+    }
+];
+    
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+
+    shuffle(questions);
+    questions.forEach(q => shuffle(q.answers));
+
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+});
+
+
+startQuiz();
+
+</script>
+</html>
