@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Testing</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #001e4d;
+}
+.app{
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz{
+    padding: 20px 0;
+}
+.quiz h2{
+    font-size: 18px;
+    color: #001e4d;
+    font-weight: 600;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.correct{
+    background: #9aeabc;
+}
+.incorrect{
+    background: #ff9393;
+}
+    </style>
+</head>
+
+<body>
+    
+    <div class="app">
+            <h1>Midterm Exam of Info Assurance </h1>
+            <div class="quiz">
+                <h2 id="question">Question Goes Here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                    <button class="btn">Answer 5</button>
+                    <button class="btn">Answer 6</button>
+                    <button class="btn">Answer 7</button>
+                    <button class="btn">Answer 8</button>
+                    <button class="btn">Answer 9</button>
+                    <button class="btn">Answer 10</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+</body>
+<script>
+
+    const questions = [
+    {
+        question: "This is a more powerful attack than dictionary and brute-force attacks because the cracker knows the password type.",
+        answers: [
+            { text: "Wire Sniffing", correct: false},
+            { text: "Hybrid Attack", correct: false},
+            { text: "Syllable Attack", correct: false},
+            { text: "Rule-based Attack", correct: true},
+        ]
+    },
+    {
+        question: "It is a brute-force attack on encryption that employs a search of the keyspace.",
+        answers: [
+            { text: "Complexity", correct: false},
+            { text: "Cryptanalysis", correct: true},
+            { text: "Dictionary Attack", correct: false},
+            { text: "Rule-based Attack", correct: false},
+        ]
+    },
+    {
+        question: "It is a vulnerability caused by a coding error that allows writing content beyond the buffer's allocated size.",
+        answers: [
+            { text: "Design Flaw", correct: false},
+            { text: "Open Service", correct: false},
+            { text: "Buffer Overflow", correct: true},
+            { text: "Application Flaw", correct: false},
+        ]
+    },
+    {
+        question: "It is a type of vulnerability exploited by an attacker before they are identified and patched by the developers.",
+        answers: [
+            { text: "Open Services", correct: false},
+            { text: "Zero-day Vulnerability", correct: true},
+            { text: "Legacy Platform Vulnerability", correct: false},
+            { text: "Buffer Overflow Vulnerabilities", correct: false},
+        ]
+    },
+    {
+        question: "This \"non-malware\" infects legitimate software, applications, and protocols existing in the system to perform malicious activities.",
+        answers: [
+            { text: "Botnet", correct: false},
+            { text: "Spyware", correct: false},
+            { text: "Ransomware", correct: false},
+            { text: "Fileless Malware", correct: true},
+        ]
+    },
+    {
+        question: "This attack is used when passwords are NOT known words.",
+        answers: [
+            { text: "Wire Sniffing", correct: false},
+            { text: "Hybrid Attack", correct: false},
+            { text: "Packet Sniffing", correct: false},
+            { text: "Syllable Attack", correct: true},
+        ]
+    },
+    {
+        question: "This attack lets program add numbers and symbols to the words from the dictionary to crack the password.",
+        answers: [
+            { text: "Wire Sniffing", correct: false},
+            { text: "Hybrid Attack", correct: true},
+            { text: "Packet Sniffing", correct: false},
+            { text: "Syllable Attack", correct: false},
+        ]
+    },
+    {
+        question: "This is a standalone malicious program that replicates and spreads across network connections without human intervention.",
+        answers: [
+            { text: "Virus", correct: false},
+            { text: "Botnet", correct: false},
+            { text: "Rootkit", correct: false},
+            { text: "Computer Worm", correct: true},
+        ]
+    },
+    {
+        question: "This is a type of assessment that examines the network from a hacker's point of view.",
+        answers: [
+            { text: "Internal Assessment", correct: false},
+            { text: "External Assessment", correct: true},
+            { text: "Host-based Assessment", correct: false},
+            { text: "Network-based Assessment", correct: false},
+        ]
+    },
+    {
+        question: "This is the process of recovering passwords from the data transmitted by a computer system or from the data stored in it.",
+        answers: [
+            { text: "Brute Force", correct: false},
+            { text: "Keylogging", correct: false},
+            { text: "Password Guessing", correct: false},
+            { text: "Password Cracking", correct: true},
+        ]
+    },
+    {
+        question: "It is a Windows password-cracking tool that uses rainbow tables for cracking passwords.",
+        answers: [
+            { text: "Medusa", correct: false},
+            { text: "Hashcat", correct: false},
+            { text: "Ophcrack", correct: true},
+            { text: "L0phtCrack", correct: false},
+        ]
+    },
+    {
+        question: "It is a type of vulnerability assessment wherein the security professional possesses the credentials of all machines present in the assessed network.",
+        answers: [
+            { text: "Distributed Assessment", correct: false},
+            { text: "Automated Assessment", correct: false},
+            { text: "Network-based Assessment", correct: false},
+            { text: "Credential-based Assessment", correct: true},
+        ]
+    },
+    {
+        question: "This is a tool designed to audit passwords and recover applications, and it recovers lost Microsoft Windows passwords.",
+        answers: [
+            { text: "Medusa", correct: false},
+            { text: "Hashcat", correct: false},
+            { text: "Ophcrack", correct: false},
+            { text: "L0phtCrack", correct: true},
+        ]
+    },
+    {
+        question: "It is a password-cracking technique that involves attempting to log on to the target system with different passwords manually.",
+        answers: [
+            { text: "Password Sniffing", correct: false},
+            { text: "Password Guessing", correct: true},
+            { text: "Password Complexity", correct: false},
+            { text: "Passive Online Attack", correct: false},
+        ]
+    },
+    {
+        question: "It is a type of password attack that does not require any technical knowledge about hacking or system exploitation.",
+        answers: [
+            { text: "Offline Attack", correct: false},
+            { text: "Active Online Attack", correct: false},
+            { text: "Passive Online Attack", correct: false},
+            { text: "Non-electronic Attack", correct: true},
+        ]
+    },
+    {
+        question: "Steve, a forensic expert, was appointed to evaluate an attack initiated on the organization's network. He performed an overall assessment of the network to identify the cause. During this process, he identified outbound connections to Internet services and a few applications running with debugging enabled. Which following categories of vulnerabilities did Steve identify in the above scenario?",
+        answers: [
+            { text: "Design Flaw", correct: false},
+            { text: "Buffer Overflows", correct: false},
+            { text: "Misconfiguration", correct: true},
+            { text: "Operating System Flaws", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following approaches identifies vulnerabilities without directly engaging with the target system?",
+        answers: [
+            { text: "Active Scanning", correct: false},
+            { text: "Passive Scanning", correct: true},
+            { text: "Manual Assessment", correct: false},
+            { text: "Credentialed Assessment", correct: false},
+        ]
+    },
+    {
+        question: "A security professional needs to test vulnerabilities across all branch offices at once. Which of the following assessments should they conduct?",
+        answers: [
+            { text: "Manual assessment", correct: false},
+            { text: "Distributed assessment", correct: true},
+            { text: "Host-based assessment", correct: false},
+            { text: "Internal assessment", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following would MOST likely happen if an employee accidentally shares confidential login credentials?",
+        answers: [
+            { text: "Adware infection", correct: false},
+            { text: "Unintentional threat", correct: true},
+            { text: "Zero-day vulnerability", correct: false},
+            { text: "Structured external threat", correct: false},
+        ]
+    },
+    {
+        question: "A system administrator wants to prevent brute-force login attempts from continuing indefinitely. Which of the following should be BEST implemented?",
+        answers: [
+            { text: "Set login attempt limits", correct: false},
+            { text: "Configure retry delay timers", correct: false},
+            { text: "Account lockout after failed attempts", correct: true},
+            { text: "Enable CAPTCHA verification for users", correct: false},
+        ]
+    },
+    {
+        question: "A user sets the password as their pet's name, making it easily guessable. Which of the following is the BEST countermeasure?",
+        answers: [
+            { text: "Write the password down", correct: false},
+            { text: "Shorten the password length", correct: false},
+            { text: "Avoid personal information", correct: true},
+            { text: "Set passwords and logins never to expire", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following assessments is BEST suited for analyzing a custom-built web app and identifying deployment flaws?",
+        answers: [
+            { text: "Passive Assessment", correct: false},
+            { text: "Wireless Assessment", correct: false},
+            { text: "Application Assessment", correct: true},
+            { text: "Credential-based Assessment", correct: false},
+        ]
+    },
+    {
+        question: "Jack, a professional hacker was recruited by an agency to steal sensitive data from a rival company. From a remote location, he discovered vulnerabilities in the target company's network using a vulnerability scanner. He exploited them to intrude into the network and steal confidential data. Which of the following threat sources did Jack exploit?",
+        answers: [
+            { text: "Internal Threat", correct: false},
+            { text: "Natural Threat", correct: false},
+            { text: "External Threat", correct: true},
+            { text: "Unintentional Threat", correct: false},
+        ]
+    },
+    {
+        question: "Pol, a professional hacker, targeted Johana's official email to steal sensitive information related to a project. Using a password cracking tool, Pol tried all the possible combinations of password characters until it was cracked. Which of the following types of password attack was performed by Pol in the above scenario?",
+        answers: [
+            { text: "Dictionary", correct: false},
+            { text: "Wire Sniffing", correct: false},
+            { text: "Offline Attacks", correct: false},
+            { text: "Brute-Force Attack", correct: true},
+        ]
+    },
+    {
+        question: "Which of the following malware components performs the desired activity when activated and is used to delete or modify files to compromise system security?",
+        answers: [
+            { text: "Crypter", correct: false},
+            { text: "Payload", correct: true},
+            { text: "Dropper", correct: false},
+            { text: "Downloader", correct: false},
+        ]
+    },
+    {
+        question: "Which of the following practices can help administrators protect an organization's server from password cracking attempts?",
+        answers: [
+            { text: "Use personal information as a password", correct: false},
+            { text: "Use a random location for password storage", correct: false},
+            { text: "Enable account lockout following a certain number of invalid attempts", correct: true},
+            { text: "Ensure that applications store passwords in memory and write them to disk", correct: false},
+        ]
+    },
+    {
+        question: "A hacker collects passwords without any technical knowledge about hacking or system exploitation. Which of the following attack types did they use?",
+        answers: [
+            { text: "Offline Attack", correct: false},
+            { text: "Active Online Attack", correct: false},
+            { text: "Non-electronic Attack", correct: true},
+            { text: "Man-in-the-Middle Attack", correct: false},
+        ]
+    },
+    {
+        question: "Multiple failed login attempts were made on a disabled employee account. Which of the following is the MOST proper countermeasure?",
+        answers: [
+            { text: "Delete inactive users", correct: false},
+            { text: "Restrict failed attempts", correct: false},
+            { text: "Monitor account activity", correct: false},
+            { text: "Disable unused accounts", correct: true},
+        ]
+    },
+    {
+        question: "An attacker tries password combinations like \"admin123\", \"admin1234\", and \"admin12345\" on a server login. Which of the following attack methods is demonstrated?",
+        answers: [
+            { text: "Wire Sniffing", correct: false},
+            { text: "Hybrid Attack", correct: true},
+            { text: "Syllable Attack", correct: false},
+            { text: "Non-electronic Attack", correct: false},
+        ]
+    },
+    {
+        question: "A database administrator suspects SQL injection vulnerabilities in their MySQL and Oracle instances. Which of the following assessments should be conducted?",
+        answers: [
+            { text: "Internal Assessment", correct: false},
+            { text: "Database Assessment", correct: true},
+            { text: "Application Assessment", correct: false},
+            { text: "Host-based Assessment", correct: false},
+        ]
+    },
+    {
+        question: "Your network has recently been infiltrated by spyware from a fraudulent website that auto-downloaded malicious software. Which of the following will MOST likely block this attack vector?",
+        answers: [
+            { text: "Deploy captive portals", correct: false},
+            { text: "Careful software sourcing", correct: true},
+            { text: "Change user passwords monthly", correct: false},
+            { text: "Install dual monitors for surveillance", correct: false},
+        ]
+    },
+    {
+        question: "You're advising a team on improving password policy after discovering reused and guessable employee credentials. Which of the following is the BEST recommendation?",
+        answers: [
+            { text: "Encrypt passwords with ROT13", correct: false},
+            { text: "Store passwords in browser autofill", correct: false},
+            { text: "Use 8-12 alphanumeric characters with symbols", correct: true},
+            { text: "Use names, addresses, and birthdays as passwords", correct: false},
+        ]
+    },
+    {
+        question: "A programmer introduced a coding error that allowed writing beyond the allocated buffer size, crashing the system. Which of the following offers the BEST solution?",
+        answers: [
+            { text: "Block ports", correct: false},
+            { text: "Encrypt disks", correct: false},
+            { text: "Ban remote login", correct: false},
+            { text: "Prevent buffer overflow", correct: true},
+        ]
+    },
+    {
+        question: "A breach investigation revealed that many users were still using default vendor-supplied passwords. Which of the following BEST addresses this vulnerability?",
+        answers: [
+            { text: "Audit password policies quarterly", correct: false},
+            { text: "Require frequent password changes", correct: false},
+            { text: "Enforce unique credentials on setup", correct: true},
+            { text: "Introduce security awareness training", correct: false},
+        ]
+    },
+    {
+        question: "Mark, a professional hacker, scanned the target system to check for running services or open ports. After successful scanning, he discovered an open FTP port, exploited it to install malware, and performed malicious activities on the victim's system. In which of the following ways did Mark install malware in the victim system?",
+        answers: [
+            { text: "Using email attachments", correct: false},
+            { text: "Using file-sharing services", correct: true},
+            { text: "Using rogue/decoy applications", correct: false},
+            { text: "Using insecure patch updates", correct: false},
+        ]
+    }
+];
+    
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(){
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+
+    shuffle(questions);
+    questions.forEach(q => shuffle(q.answers));
+
+    showQuestion();
+}
+
+function showQuestion(){
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if(isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
+    nextButton.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+    }
+});
+
+
+startQuiz();
+
+</script>
+</html>
